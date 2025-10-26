@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:router_app/data/model/cafe.dart';
-import 'package:router_app/services/favorites_service.dart';
 
 class CafeTile extends StatelessWidget {
   final Cafe cafe;
@@ -29,7 +28,7 @@ class CafeTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0),
           boxShadow: [
             BoxShadow(
-              color: Colors.brown.withOpacity(0.1),
+              color: Colors.brown.withValues(alpha: 0.1),
               blurRadius: 4.0,
               offset: const Offset(0, 2),
             ),
@@ -66,7 +65,7 @@ class CafeTile extends StatelessWidget {
                       const Icon(Icons.star, size: 14, color: Colors.amber),
                       Text(
                         cafe.rating.toStringAsFixed(1),
-                        style: TextStyle(fontSize: 14.0, color: Colors.black54),
+                        style: const TextStyle(fontSize: 14.0, color: Colors.black54),
                       ),
                     ],
                   ),

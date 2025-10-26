@@ -34,6 +34,9 @@ class App extends StatelessWidget {
             color: Colors.black54,
           ),
         ),
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder(),
+        ),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
         useMaterial3: true,
       ),
