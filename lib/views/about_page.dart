@@ -7,66 +7,71 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Icon(
-              Icons.coffee,
-              size: 100,
-              color: Colors.brown[400],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('About'),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Icon(
+                Icons.coffee,
+                size: 100,
+                color: Colors.brown[400],
+              ),
             ),
-          ),
-          const SizedBox(height: 24),
-          Center(
-            child: Text(
-              'Coffee Browser',
-              style: Theme.of(context).textTheme.displaySmall
+            const SizedBox(height: 24),
+            Center(
+              child: Text(
+                'Coffee Browser',
+                style: Theme.of(context).textTheme.displaySmall
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-          Center(
-            child: Text(
-              'Version 2.0.0',
-              style: Theme.of(context).textTheme.labelLarge
+            const SizedBox(height: 8),
+            Center(
+              child: Text(
+                'Version 2.0.0',
+                style: Theme.of(context).textTheme.labelLarge
+              ),
             ),
-          ),
-          const SizedBox(height: 32),
-          Text(
-            'Welcome to Coffee Browser!',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.brown[700],
+            const SizedBox(height: 32),
+            Text(
+              'Welcome to Coffee Browser!',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.brown[700],
+              ),
             ),
-          ),
-          const SizedBox(height: 12),
-          const Text(
-            'This app is part of an auto_route workshop - Level 2: Advanced Features.',
-            style: TextStyle(
-              fontSize: 16,
-              height: 1.5,
-              color: Colors.black87,
+            const SizedBox(height: 12),
+            const Text(
+              'This app is part of an auto_route workshop - Level 2: Advanced Features.',
+              style: TextStyle(
+                fontSize: 16,
+                height: 1.5,
+                color: Colors.black87,
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          Text(
-            'Learning Topics',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.brown[700],
+            const SizedBox(height: 20),
+            Text(
+              'Learning Topics',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.brown[700],
+              ),
             ),
-          ),
-          const SizedBox(height: 12),
-          _buildLearningItem('Authentication with route guards'),
-          _buildLearningItem('Nested navigation with tabs'),
-          _buildLearningItem('Query parameters and path parameters'),
-          _buildLearningItem('Protected routes and auth flow'),
-          _buildLearningItem('Tab-based navigation patterns'),
-        ],
+            const SizedBox(height: 12),
+            _buildLearningItem('Authentication with route guards'),
+            _buildLearningItem('Nested navigation with tabs'),
+            _buildLearningItem('Query parameters and path parameters'),
+            _buildLearningItem('Protected routes and auth flow'),
+            _buildLearningItem('Tab-based navigation patterns'),
+          ],
+        ),
       ),
     );
   }

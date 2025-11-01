@@ -185,52 +185,16 @@ class LoginRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.ProfilePage]
-class ProfileRoute extends _i8.PageRouteInfo<ProfileRouteArgs> {
-  ProfileRoute({
-    _i9.Key? key,
-    bool isAdmin = false,
-    List<_i8.PageRouteInfo>? children,
-  }) : super(
-          ProfileRoute.name,
-          args: ProfileRouteArgs(key: key, isAdmin: isAdmin),
-          rawQueryParams: {'isAdmin': isAdmin},
-          initialChildren: children,
-        );
+class ProfileRoute extends _i8.PageRouteInfo<void> {
+  const ProfileRoute({List<_i8.PageRouteInfo>? children})
+      : super(ProfileRoute.name, initialChildren: children);
 
   static const String name = 'ProfileRoute';
 
   static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      final queryParams = data.queryParams;
-      final args = data.argsAs<ProfileRouteArgs>(
-        orElse: () =>
-            ProfileRouteArgs(isAdmin: queryParams.getBool('isAdmin', false)),
-      );
-      return _i7.ProfilePage(key: args.key, isAdmin: args.isAdmin);
+      return const _i7.ProfilePage();
     },
   );
-}
-
-class ProfileRouteArgs {
-  const ProfileRouteArgs({this.key, this.isAdmin = false});
-
-  final _i9.Key? key;
-
-  final bool isAdmin;
-
-  @override
-  String toString() {
-    return 'ProfileRouteArgs{key: $key, isAdmin: $isAdmin}';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    if (other is! ProfileRouteArgs) return false;
-    return key == other.key && isAdmin == other.isAdmin;
-  }
-
-  @override
-  int get hashCode => key.hashCode ^ isAdmin.hashCode;
 }

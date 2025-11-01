@@ -4,12 +4,7 @@ import 'package:router_app/services/auth_service.dart';
 
 @RoutePage()
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({
-    super.key,
-    @QueryParam('isAdmin') this.isAdmin = false,
-  });
-
-  final bool isAdmin;
+  const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +19,6 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Query Parameters Demo
-            if (isAdmin) ...[
-              Text(
-                'Admin Access Granted',
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.red),
-              ),
-            ],
-            // User Info Card
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(16),

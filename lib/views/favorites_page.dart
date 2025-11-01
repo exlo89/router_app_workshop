@@ -38,55 +38,60 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return favoriteCafes.isEmpty
-        ? Center(
-            child: Column(
-              spacing: 10,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.favorite_border,
-                  size: 80,
-                  color: Colors.grey.shade400,
-                ),
-                Text(
-                  'No favorites yet!',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        color: Colors.grey.shade600,
-                      ),
-                ),
-                Text(
-                  'Start adding cafes to your favorites',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey.shade500,
-                      ),
-                ),
-              ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Favorites'),
+      ),
+      body: favoriteCafes.isEmpty
+          ? Center(
+              child: Column(
+                spacing: 10,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.favorite_border,
+                    size: 80,
+                    color: Colors.grey.shade400,
+                  ),
+                  Text(
+                    'No favorites yet!',
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          color: Colors.grey.shade600,
+                        ),
+                  ),
+                  Text(
+                    'Start adding cafes to your favorites',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.grey.shade500,
+                        ),
+                  ),
+                ],
+              ),
+            )
+          : Container(
+              padding: const EdgeInsets.all(20),
+              child: ListView.separated(
+                itemBuilder: (BuildContext context, int index) {
+                  final cafe = favoriteCafes.elementAt(index);
+                  return CafeTile(
+                    cafe: cafe,
+                    onTap: () {
+                      context.router.navigate(DetailsRoute(cafe: cafe));
+                    },
+                    isFavorite: _favoritesService.isFavorite(cafe.id),
+                    onFavouriteTap: () {
+                      setState(() {
+                        _favoritesService.toggleFavorite(cafe.id);
+                      });
+                    },
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return const SizedBox(height: 16);
+                },
+                itemCount: favoriteCafes.length,
+              ),
             ),
-          )
-        : Container(
-            padding: const EdgeInsets.all(20),
-            child: ListView.separated(
-              itemBuilder: (BuildContext context, int index) {
-                final cafe = favoriteCafes.elementAt(index);
-                return CafeTile(
-                  cafe: cafe,
-                  onTap: () {
-                    context.router.navigate(DetailsRoute(cafe: cafe));
-                  },
-                  isFavorite: _favoritesService.isFavorite(cafe.id),
-                  onFavouriteTap: () {
-                    setState(() {
-                      _favoritesService.toggleFavorite(cafe.id);
-                    });
-                  },
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(height: 16);
-              },
-              itemCount: favoriteCafes.length,
-            ),
-          );
+    );
   }
 }
