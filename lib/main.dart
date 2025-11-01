@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:router_app/core/router/router.dart';
+import 'package:router_app/views/home_page.dart';
 
 void main() {
-  runApp(App());
+  runApp(const App());
 }
 
 class App extends StatelessWidget {
-  App({super.key});
-
-  final appRouter = AppRouter();
+  const App({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return MaterialApp(
       theme: ThemeData(
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.brown.shade400,
@@ -37,7 +35,7 @@ class App extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
         useMaterial3: true,
       ),
-      routerConfig: appRouter.config(),
+      home: const HomePage(),
       title: 'My Favourite Cafe App',
     );
   }

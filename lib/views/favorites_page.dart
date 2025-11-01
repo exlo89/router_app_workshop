@@ -1,10 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:router_app/components/cafe_tile.dart';
-import 'package:router_app/core/router/router.gr.dart';
 import 'package:router_app/services/favorites_service.dart';
+import 'package:router_app/views/details_page.dart';
 
-@RoutePage()
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
 
@@ -76,7 +74,12 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   return CafeTile(
                     cafe: cafe,
                     onTap: () {
-                      context.router.navigate(DetailsRoute(cafe: cafe));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (context) => DetailsPage(cafe: cafe),
+                        ),
+                      );
                     },
                     isFavorite: _favoritesService.isFavorite(cafe.id),
                     onFavouriteTap: () {

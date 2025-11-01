@@ -1,6 +1,6 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:router_app/core/router/router.gr.dart';
+import 'package:router_app/views/about_page.dart';
+import 'package:router_app/views/favorites_page.dart';
 
 class HomeDrawer extends StatelessWidget {
   const HomeDrawer({super.key});
@@ -38,21 +38,31 @@ class HomeDrawer extends StatelessWidget {
             leading: const Icon(Icons.home),
             title: const Text('Home'),
             onTap: () {
-              context.router.pop();
-              },
+              Navigator.pop(context);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.favorite),
             title: const Text('Favorites'),
             onTap: () {
-              context.router.navigate(const FavoritesRoute());
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const FavoritesPage(),
+                ),
+              );
             },
           ),
           ListTile(
             leading: const Icon(Icons.info),
             title: const Text('About'),
             onTap: () {
-              context.router.navigate(const AboutRoute());
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AboutPage(),
+                ),
+              );
             },
           ),
         ],

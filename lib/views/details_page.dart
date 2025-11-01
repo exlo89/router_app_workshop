@@ -1,9 +1,7 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:router_app/data/model/cafe.dart';
 import 'package:router_app/services/favorites_service.dart';
 
-@RoutePage()
 class DetailsPage extends StatefulWidget {
   final Cafe cafe;
 
