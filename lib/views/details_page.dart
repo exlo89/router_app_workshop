@@ -1,35 +1,41 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:router_app/core/di/service_locator.dart';
+import 'package:router_app/cubits/favorites/favorites_cubit.dart';
+import 'package:router_app/cubits/favorites/favorites_state.dart';
 import 'package:router_app/data/model/cafe.dart';
-import 'package:router_app/services/favorites_service.dart';
 
 @RoutePage()
-class DetailsPage extends StatefulWidget {
+class DetailsPage extends StatelessWidget implements AutoRouteWrapper {
   final Cafe cafe;
 
   const DetailsPage({super.key, required this.cafe});
 
   @override
-  State<DetailsPage> createState() => _DetailsPageState();
-}
-
-class _DetailsPageState extends State<DetailsPage> {
-  final FavoritesService _favoritesService = FavoritesService();
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider.value(
+      value: locator<FavoritesCubit>()..loadFavorites(),
+      child: this,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.cafe.name),
+        title: Text(cafe.name),
         actions: [
-          IconButton(
-            icon: Icon(
-              _favoritesService.isFavorite(widget.cafe.id) ? Icons.favorite : Icons.favorite_border,
-            ),
-            onPressed: () {
-              setState(() {
-                _favoritesService.toggleFavorite(widget.cafe.id);
-              });
+          BlocBuilder<FavoritesCubit, FavoritesState>(
+            builder: (context, state) {
+              return IconButton(
+                icon: Icon(
+                  state.isFavorite(cafe.id) ? Icons.favorite : Icons.favorite_border,
+                ),
+                onPressed: () {
+                  context.read<FavoritesCubit>().toggleFavorite(cafe.id);
+                },
+              );
             },
           ),
         ],
@@ -45,7 +51,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 color: Colors.brown.shade100,
               ),
               child: Image.network(
-                widget.cafe.imageUrl,
+                cafe.imageUrl,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return Center(
@@ -68,7 +74,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: Text(widget.cafe.name, style: Theme.of(context).textTheme.headlineMedium),
+                        child: Text(cafe.name, style: Theme.of(context).textTheme.headlineMedium),
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -80,7 +86,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           spacing: 4,
                           children: [
                             const Icon(Icons.star, size: 18, color: Colors.amber),
-                            Text(widget.cafe.rating.toStringAsFixed(1), style: Theme.of(context).textTheme.titleMedium),
+                            Text(cafe.rating.toStringAsFixed(1), style: Theme.of(context).textTheme.titleMedium),
                           ],
                         ),
                       ),
@@ -95,7 +101,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           const Icon(Icons.location_on, color: Colors.brown),
                           Expanded(
                             child: Text(
-                              widget.cafe.address,
+                              cafe.address,
                             ),
                           ),
                         ],
@@ -107,7 +113,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           const Icon(Icons.access_time, color: Colors.brown),
                           Expanded(
                             child: Text(
-                              widget.cafe.hours,
+                              cafe.hours,
                             ),
                           ),
                         ],
@@ -116,11 +122,11 @@ class _DetailsPageState extends State<DetailsPage> {
                         spacing: 8,
                         children: [
                           Icon(
-                            widget.cafe.hasWifi ? Icons.wifi : Icons.wifi_off,
-                            color: widget.cafe.hasWifi ? Colors.green : Colors.grey,
+                            cafe.hasWifi ? Icons.wifi : Icons.wifi_off,
+                            color: cafe.hasWifi ? Colors.green : Colors.grey,
                           ),
                           Text(
-                            widget.cafe.hasWifi ? 'Free WiFi available' : 'No WiFi',
+                            cafe.hasWifi ? 'Free WiFi available' : 'No WiFi',
                           ),
                         ],
                       ),
@@ -137,7 +143,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         ),
                       ),
                       Text(
-                        widget.cafe.description,
+                        cafe.description,
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.black87,

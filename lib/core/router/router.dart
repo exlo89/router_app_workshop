@@ -16,14 +16,45 @@ class AppRouter extends RootStackRouter {
           page: DashboardRoute.page,
           guards: [_authGuard],
           children: [
-            AutoRoute(page: HomeRoute.page, initial: true),
-            AutoRoute(page: FavoritesRoute.page),
+            // Home Wrapper - Navigation stack within Home tab
+            AutoRoute(
+              page: HomeWrapperRoute.page,
+              initial: true,
+              children: [
+                AutoRoute(page: HomeRoute.page, initial: true),
+                AutoRoute(page: DetailsRoute.page),
+              ],
+            ),
+
+            // Search Wrapper - Navigation stack within Search tab
+            AutoRoute(
+              page: SearchWrapperRoute.page,
+              children: [
+                AutoRoute(page: SearchRoute.page, initial: true),
+                AutoRoute(page: DetailsRoute.page),
+              ],
+            ),
+
+            // Favorites Wrapper - Navigation stack within Favorites tab
+            AutoRoute(
+              page: FavoritesWrapperRoute.page,
+              children: [
+                AutoRoute(page: FavoritesRoute.page, initial: true),
+                AutoRoute(page: DetailsRoute.page),
+              ],
+            ),
+
+            AutoRoute(page: ProfileRoute.page),
             AutoRoute(page: AboutRoute.page),
           ],
         ),
 
-        // protected
-        AutoRoute(page: DetailsRoute.page, guards: [_authGuard]),
-        AutoRoute(page: ProfileRoute.page, guards: [_authGuard]),
+        // Deep linking route for cafe details (outside tab navigation)
+        // URL: /cafe/:id (e.g., /cafe/1)
+        AutoRoute(
+          page: DetailsRoute.page,
+          path: '/cafe/:id',
+          guards: [_authGuard],
+        ),
       ];
 }

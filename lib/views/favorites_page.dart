@@ -1,92 +1,83 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:router_app/components/cafe_tile.dart';
+import 'package:router_app/core/di/service_locator.dart';
 import 'package:router_app/core/router/router.gr.dart';
-import 'package:router_app/services/favorites_service.dart';
+import 'package:router_app/cubits/favorites/favorites_cubit.dart';
+import 'package:router_app/cubits/favorites/favorites_state.dart';
 
 @RoutePage()
-class FavoritesPage extends StatefulWidget {
+class FavoritesPage extends StatelessWidget implements AutoRouteWrapper {
   const FavoritesPage({super.key});
 
   @override
-  State<FavoritesPage> createState() => _FavoritesPageState();
-}
-
-class _FavoritesPageState extends State<FavoritesPage> {
-  final FavoritesService _favoritesService = FavoritesService();
-  final favoriteCafes = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _favoritesService.addListener(_onFavoritesChanged);
-    favoriteCafes.addAll(_favoritesService.getFavoriteCafes());
-  }
-
-  @override
-  void dispose() {
-    _favoritesService.removeListener(_onFavoritesChanged);
-    super.dispose();
-  }
-
-  void _onFavoritesChanged() {
-    setState(() {
-      favoriteCafes.clear();
-      favoriteCafes.addAll(_favoritesService.getFavoriteCafes());
-    });
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider.value(
+      value: locator<FavoritesCubit>()..loadFavorites(),
+      child: this,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return favoriteCafes.isEmpty
-        ? Center(
-            child: Column(
-              spacing: 10,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.favorite_border,
-                  size: 80,
-                  color: Colors.grey.shade400,
-                ),
-                Text(
-                  'No favorites yet!',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        color: Colors.grey.shade600,
-                      ),
-                ),
-                Text(
-                  'Start adding cafes to your favorites',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey.shade500,
-                      ),
-                ),
-              ],
-            ),
-          )
-        : Container(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('My Favorites'),
+      ),
+      body: BlocBuilder<FavoritesCubit, FavoritesState>(
+        builder: (context, state) {
+          if (state.favoriteCafes.isEmpty) {
+            return Center(
+              child: Column(
+                spacing: 10,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.favorite_border,
+                    size: 80,
+                    color: Colors.grey.shade400,
+                  ),
+                  Text(
+                    'No favorites yet!',
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          color: Colors.grey.shade600,
+                        ),
+                  ),
+                  Text(
+                    'Start adding cafes to your favorites',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.grey.shade500,
+                        ),
+                  ),
+                ],
+              ),
+            );
+          }
+          return Padding(
             padding: const EdgeInsets.all(20),
             child: ListView.separated(
               itemBuilder: (BuildContext context, int index) {
-                final cafe = favoriteCafes.elementAt(index);
+                final cafe = state.favoriteCafes.elementAt(index);
                 return CafeTile(
                   cafe: cafe,
                   onTap: () {
                     context.router.navigate(DetailsRoute(cafe: cafe));
                   },
-                  isFavorite: _favoritesService.isFavorite(cafe.id),
+                  isFavorite: state.isFavorite(cafe.id),
                   onFavouriteTap: () {
-                    setState(() {
-                      _favoritesService.toggleFavorite(cafe.id);
-                    });
+                    BlocProvider.of<FavoritesCubit>(context).toggleFavorite(cafe.id);
                   },
                 );
               },
               separatorBuilder: (BuildContext context, int index) {
                 return const SizedBox(height: 16);
               },
-              itemCount: favoriteCafes.length,
+              itemCount: state.favoriteCafes.length,
             ),
           );
+        },
+      ),
+    );
   }
 }
