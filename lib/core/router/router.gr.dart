@@ -245,12 +245,10 @@ class ProfileRoute extends _i12.PageRouteInfo<ProfileRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<ProfileRouteArgs>();
-      return _i12.WrappedRoute(
-        child: _i9.ProfilePage(
-          key: args.key,
-          isAdmin: args.isAdmin,
-          username: args.username,
-        ),
+      return _i9.ProfilePage(
+        key: args.key,
+        isAdmin: args.isAdmin,
+        username: args.username,
       );
     },
   );
