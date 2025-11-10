@@ -2,23 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:router_app/components/cafe_tile.dart';
-import 'package:router_app/core/di/service_locator.dart';
 import 'package:router_app/core/router/router.gr.dart';
 import 'package:router_app/cubits/favorites/favorites_cubit.dart';
 import 'package:router_app/cubits/favorites/favorites_state.dart';
 import 'package:router_app/data/model/cafe.dart';
 
 @RoutePage()
-class SearchPage extends StatefulWidget implements AutoRouteWrapper {
+class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider.value(
-      value: locator<FavoritesCubit>()..loadFavorites(),
-      child: this,
-    );
-  }
 
   @override
   State<SearchPage> createState() => _SearchPageState();
