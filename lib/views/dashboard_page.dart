@@ -7,16 +7,8 @@ import 'package:router_app/cubits/auth/auth_cubit.dart';
 import 'package:router_app/cubits/favorites/favorites_cubit.dart';
 
 @RoutePage()
-class DashboardPage extends StatelessWidget implements AutoRouteWrapper {
+class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider.value(
-      value: locator<FavoritesCubit>()..loadFavorites(),
-      child: this,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
