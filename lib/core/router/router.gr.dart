@@ -11,7 +11,6 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i12;
 import 'package:flutter/material.dart' as _i13;
-import 'package:router_app/data/model/cafe.dart' as _i14;
 import 'package:router_app/views/about_page.dart' as _i1;
 import 'package:router_app/views/dashboard_page.dart' as _i2;
 import 'package:router_app/views/details_page.dart' as _i3;
@@ -61,11 +60,12 @@ class DashboardRoute extends _i12.PageRouteInfo<void> {
 class DetailsRoute extends _i12.PageRouteInfo<DetailsRouteArgs> {
   DetailsRoute({
     _i13.Key? key,
-    required _i14.Cafe cafe,
+    required String id,
     List<_i12.PageRouteInfo>? children,
   }) : super(
           DetailsRoute.name,
-          args: DetailsRouteArgs(key: key, cafe: cafe),
+          args: DetailsRouteArgs(key: key, id: id),
+          rawPathParams: {'id': id},
           initialChildren: children,
         );
 
@@ -74,35 +74,38 @@ class DetailsRoute extends _i12.PageRouteInfo<DetailsRouteArgs> {
   static _i12.PageInfo page = _i12.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<DetailsRouteArgs>();
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<DetailsRouteArgs>(
+        orElse: () => DetailsRouteArgs(id: pathParams.getString('id')),
+      );
       return _i12.WrappedRoute(
-        child: _i3.DetailsPage(key: args.key, cafe: args.cafe),
+        child: _i3.DetailsPage(key: args.key, id: args.id),
       );
     },
   );
 }
 
 class DetailsRouteArgs {
-  const DetailsRouteArgs({this.key, required this.cafe});
+  const DetailsRouteArgs({this.key, required this.id});
 
   final _i13.Key? key;
 
-  final _i14.Cafe cafe;
+  final String id;
 
   @override
   String toString() {
-    return 'DetailsRouteArgs{key: $key, cafe: $cafe}';
+    return 'DetailsRouteArgs{key: $key, id: $id}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! DetailsRouteArgs) return false;
-    return key == other.key && cafe == other.cafe;
+    return key == other.key && id == other.id;
   }
 
   @override
-  int get hashCode => key.hashCode ^ cafe.hashCode;
+  int get hashCode => key.hashCode ^ id.hashCode;
 }
 
 /// generated route for

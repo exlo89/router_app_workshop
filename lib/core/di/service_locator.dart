@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:router_app/cubits/auth/auth_cubit.dart';
+import 'package:router_app/cubits/cafe_details/cafe_details_cubit.dart';
 import 'package:router_app/cubits/favorites/favorites_cubit.dart';
 import 'package:router_app/cubits/profile/profile_cubit.dart';
 import 'package:router_app/cubits/search/search_cubit.dart';
@@ -11,4 +12,5 @@ void setupServiceLocator() {
   locator.registerLazySingleton<FavoritesCubit>(() => FavoritesCubit());
   locator.registerLazySingleton<ProfileCubit>(() => ProfileCubit());
   locator.registerLazySingleton<SearchCubit>(() => SearchCubit());
+  locator.registerFactory<CafeDetailsCubit>(() => CafeDetailsCubit());
 }

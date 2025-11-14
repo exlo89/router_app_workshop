@@ -62,7 +62,7 @@ class FavoritesPage extends StatelessWidget implements AutoRouteWrapper {
                 return CafeTile(
                   cafe: cafe,
                   onTap: () {
-                    context.router.navigate(DetailsRoute(cafe: cafe));
+                    context.router.navigate(DetailsRoute(id: cafe.id));
                   },
                   isFavorite: state.isFavorite(cafe.id),
                   onFavouriteTap: () {

@@ -45,5 +45,19 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<!-- Deep linking configuration for mycafeapp://cafe/:id -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.example.mycafeapp</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>mycafeapp</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

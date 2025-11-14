@@ -139,7 +139,7 @@ class _SearchPageState extends State<SearchPage> {
                             return CafeTile(
                               cafe: cafe,
                               onTap: () {
-                                context.router.push(DetailsRoute(cafe: cafe));
+                                context.router.push(DetailsRoute(id: cafe.id));
                               },
                               isFavorite: favoritesState.isFavorite(cafe.id),
                               onFavouriteTap: () {

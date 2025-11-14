@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:router_app/core/di/service_locator.dart';
@@ -46,7 +47,12 @@ class App extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.brown),
           useMaterial3: true,
         ),
-        routerConfig: appRouter.config(),
+        routerConfig: appRouter.config(
+          deepLinkTransformer: (uri) {
+            // used to manipulate incoming deep links before they are processed
+            return SynchronousFuture(uri);
+          },
+        ),
         title: 'My Favourite Cafe App',
       ),
     );
